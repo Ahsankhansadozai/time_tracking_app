@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:time_tracking_app/app/theme/app_color.dart';
 import 'package:time_tracking_app/presentation/dashboard_screen/view_model/DashBaordViewModel.dart';
 
 import '../../../../common/widget_styling/WidgetStyling.dart';
@@ -32,61 +33,135 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   _buildBody() {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildTodoWidget(),
-          _buildInProgressWidget(),
-          _buildDoneWidget()
-        ],
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildTodoWidget(),
+            addHorizontalSpace(10),
+            _buildInProgressWidget(),
+            addHorizontalSpace(10),
+            _buildDoneWidget()
+          ],
+        ),
       ),
     );
   }
 
   _buildTodoWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 200,
-        width: MediaQuery.of(context).size.width / 1.3,
-        child: Container(
-            decoration: hContainerBorder(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [_buildTitle('Todo')],
-            )),
-      ),
+    return SizedBox(
+      height: 200,
+      width: MediaQuery.of(context).size.width / 1.3,
+      child: Container(
+          decoration: hContainerBorder(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildTitle('Todo'),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.share,
+                              size: 20,
+                              color: AppColor.Gray700,
+                            )),
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.add,
+                              color: AppColor.Orange,
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          )),
     );
   }
 
   _buildInProgressWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 200,
-        width: MediaQuery.of(context).size.width / 1.3,
-        child: Container(
-            decoration: hContainerBorder(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [_buildTitle('InProgress')],
-            )),
-      ),
+    return SizedBox(
+      height: 200,
+      width: MediaQuery.of(context).size.width / 1.3,
+      child: Container(
+          decoration: hContainerBorder(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildTitle('InProgress'),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.share,
+                              size: 20,
+                              color: AppColor.Gray700,
+                            )),
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.add,
+                              color: AppColor.Orange,
+                            ))
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
+          )),
     );
   }
 
   _buildDoneWidget() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SizedBox(
-        height: 200,
-        width: MediaQuery.of(context).size.width / 1.3,
-        child: Container(
-          decoration: hContainerBorder(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [_buildTitle('Done')],
-          ),
+    return SizedBox(
+      height: 200,
+      width: MediaQuery.of(context).size.width / 1.3,
+      child: Container(
+        decoration: hContainerBorder(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Card(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildTitle('Done'),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.share,
+                            color: AppColor.Gray700,
+                            size: 20,
+                          )),
+                      IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.add,
+                            color: AppColor.Orange,
+                          ))
+                    ],
+                  )
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
