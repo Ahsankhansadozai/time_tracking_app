@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:time_tracking_app/app/theme/app_color.dart';
 
@@ -14,4 +13,22 @@ Widget addVerticalSpace(double height) {
 
 Widget addHorizontalSpace(double width) {
   return SizedBox(width: width);
+}
+
+Widget hEmptyText(String text, double height, double width) {
+  return SizedBox(
+      height: height,
+      width: width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('${text}'),
+          addHorizontalSpace(5),
+          Icon(
+            Icons.task,
+            size: 20,
+            color: AppColor.Gray400,
+          )
+        ],
+      ));
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:stacked/stacked.dart';
 import 'package:time_tracking_app/app/theme/app_color.dart';
 import 'package:time_tracking_app/presentation/dashboard_screen/view_model/DashBaordViewModel.dart';
@@ -73,7 +74,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               color: AppColor.Gray700,
                             )),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              dashboardViewModel.hAddNewTask();
+                            },
                             icon: Icon(
                               Icons.add,
                               color: AppColor.Orange,
@@ -82,7 +85,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     )
                   ],
                 ),
-              )
+              ),
+              addVerticalSpace(10),
+              false
+                  ? buildTodoList()
+                  : Center(
+                      child: hEmptyText(
+                        'Click to add task',
+                        100,
+                        MediaQuery.of(context).size.width / 1.3,
+                      ),
+                    )
             ],
           )),
     );
@@ -112,7 +125,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               color: AppColor.Gray700,
                             )),
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              dashboardViewModel.hAddNewTask();
+                            },
                             icon: Icon(
                               Icons.add,
                               color: AppColor.Orange,
@@ -121,7 +136,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     )
                   ],
                 ),
-              )
+              ),
+              addVerticalSpace(10),
+              false
+                  ? buildTodoList()
+                  : Center(
+                      child: hEmptyText(
+                        'Click to add task',
+                        100,
+                        MediaQuery.of(context).size.width / 1.3,
+                      ),
+                    )
             ],
           )),
     );
@@ -151,7 +176,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             size: 20,
                           )),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            dashboardViewModel.hAddNewTask();
+                          },
                           icon: Icon(
                             Icons.add,
                             color: AppColor.Orange,
@@ -160,7 +187,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   )
                 ],
               ),
-            )
+            ),
+            addVerticalSpace(10),
+            false
+                ? buildTodoList()
+                : Center(
+                    child: hEmptyText(
+                      'Click to add task',
+                      100,
+                      MediaQuery.of(context).size.width / 1.3,
+                    ),
+                  )
           ],
         ),
       ),
@@ -170,7 +207,27 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   _buildTitle(String title) {
     return Padding(
       padding: const EdgeInsets.all(10.0),
-      child: Text('$title'),
+      child: Text(title),
+    );
+  }
+
+  buildTodoList() {
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      itemCount: 0,
+      itemBuilder: (context, index) {
+        return AnimationConfiguration.staggeredList(
+          position: index,
+          duration: const Duration(milliseconds: 10),
+          child: SlideAnimation(
+            verticalOffset: 44.0,
+            child: FadeInAnimation(
+              child: Container(),
+            ),
+          ),
+        );
+      },
     );
   }
 }
