@@ -24,8 +24,12 @@ class DashBoardViewModel extends BaseViewModel {
   // function to add New Task in Database
   Future<void> hAddNewTask() async {
     _setViewState(ViewState.loading());
-    final response =
-        await _addNewTaskUseCase.call(params: AddNewTaskParams("token"));
+    final response = await _addNewTaskUseCase.call(
+        params: TaskModel(
+            taskSerialNo: null,
+            taskName: 'New Task',
+            taskCreatedTime: '',
+            taskStatus: null));
     if (response is DataSuccess) {
       if (response.data!.isEmpty) {
         _setViewState(ViewState.empty());

@@ -179,7 +179,7 @@ class _$TaskDao extends TaskDao {
   }
 
   @override
-  Future<void> insertTask(TaskModel task) async {
+  Future<void> insertNewTask(TaskModel task) async {
     await _taskModelInsertionAdapter.insert(task, OnConflictStrategy.abort);
   }
 

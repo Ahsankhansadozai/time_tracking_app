@@ -9,10 +9,10 @@ class TaskModel {
   int? taskStatus;
 
   TaskModel(
-      {this.taskSerialNo,
-      this.taskName,
-      this.taskCreatedTime,
-      this.taskStatus});
+      {required this.taskSerialNo,
+      required this.taskName,
+      required this.taskCreatedTime,
+      required this.taskStatus});
 
   TaskModel.fromJson(Map<String, dynamic> json) {
     taskSerialNo = json['taskSerialNo'];

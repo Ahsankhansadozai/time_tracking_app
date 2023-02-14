@@ -8,14 +8,14 @@ import '../../../../core/data_state.dart';
 import '../../../../core/use_case.dart';
 
 class AddNewTaskUseCase
-    implements UseCase<DataState<List<TaskModel>>, AddNewTaskParams> {
+    implements UseCase<DataState<List<TaskModel>>, TaskModel> {
   final TaskRepository _taskRepository;
 
   AddNewTaskUseCase(this._taskRepository);
 
   @override
   Future<DataState<List<TaskModel>>> call(
-      {required AddNewTaskParams params}) async {
+      {required TaskModel params}) async {
     try {
       final response = await _taskRepository.hAddNewTask(params);
       return DataSuccess(response);
@@ -27,10 +27,4 @@ class AddNewTaskUseCase
           ErrorResponse(message: '${e.toString()}', statusCode: 0));
     }
   }
-}
-
-class AddNewTaskParams {
-  final String token;
-
-  AddNewTaskParams(this.token);
 }

@@ -1,4 +1,5 @@
 import 'package:floor/floor.dart';
+
 import '../../../domain/model/Task.dart';
 
 @dao
@@ -14,7 +15,7 @@ abstract class TaskDao {
 
   @insert
   @OnConflictStrategy.replace
-  Future<void> insertTask(TaskModel task);
+  Future<void> insertNewTask(TaskModel task);
 
   @Query('DELETE FROM Task WHERE taskSerialNo=:id')
   Future<void> deleteTask(String id);

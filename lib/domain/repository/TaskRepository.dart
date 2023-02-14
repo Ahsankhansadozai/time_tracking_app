@@ -1,5 +1,5 @@
-import '../use_cases/AddTaskUseCase/use_case/AddNewTaskUseCase.dart';
+import 'package:time_tracking_app/domain/model/Task.dart';
 
 class TaskRepository {
-  hAddNewTask(AddNewTaskParams params) {}
+  hAddNewTask(TaskModel params) {}
 }
