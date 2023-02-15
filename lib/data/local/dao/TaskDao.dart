@@ -19,7 +19,7 @@ abstract class TaskDao {
   Future<void> insertNewTask(TaskModel task);
 
   @Query('DELETE FROM TaskModel WHERE taskSerialNo=:id')
-  Future<void> deleteTask(String id);
+  Future<void> hDeleteTaskFromDb(int id);
 
   @update
   Future<void> updateTask(TaskModel cart);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:time_tracking_app/app/theme/app_color.dart';
+import 'package:time_tracking_app/common/constants.dart';
 import 'package:time_tracking_app/common/custom_function.dart';
 import 'package:time_tracking_app/domain/model/Task.dart';
 import 'package:time_tracking_app/presentation/dashboard_screen/view/components/ListItemView/view/ListItemView.dart';
@@ -61,55 +62,53 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       width: MediaQuery.of(context).size.width / 1.3,
       child: Container(
           decoration: hContainerBorder(10.0),
-          child: Flexible(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Card(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildTitle('Todo'),
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                Icons.share,
-                                size: 20,
-                                color: AppColor.Gray700,
-                              )),
-                          IconButton(
-                              onPressed: () {
-                                dashboardViewModel.hAddNewTask();
-                              },
-                              icon: Icon(
-                                Icons.add,
-                                color: AppColor.Orange,
-                              ))
-                        ],
-                      )
-                    ],
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildTitle('Todo'),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.share,
+                              size: 20,
+                              color: AppColor.Gray700,
+                            )),
+                        IconButton(
+                            onPressed: () {
+                              dashboardViewModel.hAddNewTask(TODO);
+                            },
+                            icon: Icon(
+                              Icons.add,
+                              color: AppColor.Orange,
+                            ))
+                      ],
+                    )
+                  ],
                 ),
-
-                // Center(
-                //   child: hEmptyText(
-                //     'Click to add task',
-                //     100,
-                //     MediaQuery.of(context).size.width / 1.3,
-                //   ),
-                // ),
-                Flexible(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: 8.0),
-                    child: buildTodoList(
-                        dashboardViewModel.viewState.data ?? List.empty()),
-                  ),
-                )
-              ],
-            ),
+              ),
+              dashboardViewModel.viewState.data?.length == 0
+                  ? Center(
+                      child: hEmptyText(
+                        'Click to add task',
+                        100,
+                        MediaQuery.of(context).size.width / 1.3,
+                      ),
+                    )
+                  : Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: 8.0),
+                        child: buildTodoList(
+                            dashboardViewModel.viewState.data ?? List.empty()),
+                      ),
+                    )
+            ],
           )),
     );
   }
@@ -138,7 +137,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             )),
                         IconButton(
                             onPressed: () {
-                              dashboardViewModel.hAddNewTask();
+                              dashboardViewModel.hAddNewTask(INPROGRESS);
                             },
                             icon: Icon(
                               Icons.add,
@@ -189,7 +188,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           )),
                       IconButton(
                           onPressed: () {
-                            dashboardViewModel.hAddNewTask();
+                            dashboardViewModel.hAddNewTask(DONE);
                           },
                           icon: Icon(
                             Icons.add,
@@ -229,9 +228,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
-      itemCount: 10,
+      itemCount: data.length,
       itemBuilder: (context, index) {
-        return ListItemView();
+        return ListItemView(data[index]);
       },
     );
   }

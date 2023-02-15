@@ -23,4 +23,9 @@ class TaskRepositoryImpl implements TaskRepository {
   Future<List<TaskModel>> hFetchAllTaskFromLocalDb() async {
     return _appDatabase.taskDao.hFindAllTask();
   }
+
+  @override
+  hDeleteTaskFromDb(int taskSerialNo) {
+    return _appDatabase.taskDao.hDeleteTaskFromDb(taskSerialNo);
+  }
 }

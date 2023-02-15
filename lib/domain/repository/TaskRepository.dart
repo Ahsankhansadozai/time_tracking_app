@@ -4,4 +4,6 @@ abstract class TaskRepository {
   hAddNewTask(TaskModel params);
 
   hFetchAllTaskFromLocalDb();
+
+  hDeleteTaskFromDb(int taskSerialNo);
 }

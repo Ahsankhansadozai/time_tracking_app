@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:time_tracking_app/data/repository_impl/TaskRepositoryImpl.dart';
 import 'package:time_tracking_app/domain/use_cases/AddTaskUseCase/use_case/AddNewTaskUseCase.dart';
+import 'package:time_tracking_app/domain/use_cases/DeleteTaskUseCase/use_case/DeleteTaskUseCase.dart';
 import 'package:time_tracking_app/domain/use_cases/FetchAllTaskUseCase/FetchAllTaskUseCase.dart';
 
 import '../../data/local/db/AppDb.dart';
@@ -19,4 +20,6 @@ Future<void> initializeDependencies() async {
   injector.registerSingleton<AddNewTaskUseCase>(AddNewTaskUseCase(injector()));
   injector
       .registerSingleton<FetchAllTaskUseCase>(FetchAllTaskUseCase(injector()));
+
+  injector.registerSingleton<DeleteTaskUseCase>(DeleteTaskUseCase(injector()));
 }

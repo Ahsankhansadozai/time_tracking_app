@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:time_tracking_app/app/theme/app_theme.dart';
 import 'package:time_tracking_app/app/theme/app_theme_provider.dart';
+import 'package:time_tracking_app/presentation/dashboard_screen/view_model/DashBaordViewModel.dart';
 
 import '../common/Routes.dart';
 import '../common/constants.dart';
@@ -48,6 +49,7 @@ class _RootAppState extends State<RootApp> {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => AppThemeViewModel()),
+          ChangeNotifierProvider(create: (_) => DashBoardViewModel()),
         ],
         child: Consumer<AppThemeViewModel>(
             builder: (context, AppThemeViewModel themeNotifier, child) {

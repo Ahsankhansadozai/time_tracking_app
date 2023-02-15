@@ -168,7 +168,7 @@ class _$TaskDao extends TaskDao {
   }
 
   @override
-  Future<void> deleteTask(String id) async {
+  Future<void> hDeleteTaskFromDb(int id) async {
     await _queryAdapter.queryNoReturn(
         'DELETE FROM TaskModel WHERE taskSerialNo=?1',
         arguments: [id]);
