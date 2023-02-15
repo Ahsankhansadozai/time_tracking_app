@@ -34,7 +34,7 @@ class DashBoardViewModel extends BaseViewModel {
         params: TaskModel(
             taskName: 'New Task',
             taskCreatedTime: hGetCurrentDateTime(),
-            taskStatus: 1));
+            taskStatus: status));
     hFetchAllTaskFromLocalDb();
   }
 
@@ -51,7 +51,6 @@ class DashBoardViewModel extends BaseViewModel {
             taskCreatedTime: '',
             taskStatus: null));
     if (response is DataSuccess) {
-      printLog('Fetch all tasks : ${response.data?.length.toString()}');
       if (response.data == null) {
         _setViewState(ViewState.empty());
       } else {
@@ -70,5 +69,15 @@ class DashBoardViewModel extends BaseViewModel {
     _setViewState(ViewState.loading());
     await _deleteTaskUseCase.call(params: taskSerialNo);
     hFetchAllTaskFromLocalDb();
+  }
+
+  hFindTaskFromList(int type) {
+    List<TaskModel> listTobeReturned = [];
+    viewState.data?.forEach((element) {
+      if (element.taskStatus == type) {
+        listTobeReturned.add(element);
+      }
+    });
+    return listTobeReturned;
   }
 }

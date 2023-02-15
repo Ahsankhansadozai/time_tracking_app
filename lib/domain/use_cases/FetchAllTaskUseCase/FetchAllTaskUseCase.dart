@@ -16,13 +16,11 @@ class FetchAllTaskUseCase
     try {
       List<TaskModel> response =
           await _taskRepository.hFetchAllTaskFromLocalDb();
-      printLog(response[0].taskName ?? "");
 
       return DataSuccess(response);
     } catch (e) {
       printLog(e.toString());
-      return DataFailed(
-          ErrorResponse(message: '${e.toString()}', statusCode: 0));
+      return DataFailed(ErrorResponse(message: e.toString(), statusCode: 0));
     }
   }
 }

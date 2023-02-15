@@ -9,7 +9,7 @@ import '../../../../../../common/widget_styling/WidgetStyling.dart';
 class ListItemView extends StatefulWidget {
   TaskModel task;
 
-  ListItemView(this.task);
+  ListItemView(this.task, {super.key});
 
   @override
   State<ListItemView> createState() => _ListItemViewState();
