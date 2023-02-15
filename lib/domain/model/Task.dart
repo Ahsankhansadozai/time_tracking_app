@@ -9,7 +9,7 @@ class TaskModel {
   int? taskStatus;
 
   TaskModel(
-      {required this.taskSerialNo,
+      { this.taskSerialNo,
       required this.taskName,
       required this.taskCreatedTime,
       required this.taskStatus});

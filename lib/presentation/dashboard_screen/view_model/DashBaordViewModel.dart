@@ -7,11 +7,14 @@ import '../../../common/custom_function.dart';
 import '../../../core/data_state.dart';
 import '../../../core/view_state.dart';
 import '../../../domain/model/Task.dart';
+import '../../../domain/use_cases/FetchAllTaskUseCase/FetchAllTaskUseCase.dart';
 
 const loginBusyKey = 'dashboard';
 
 class DashBoardViewModel extends BaseViewModel {
   final AddNewTaskUseCase _addNewTaskUseCase = injector<AddNewTaskUseCase>();
+  final FetchAllTaskUseCase _fetchAllTaskUseCase =
+      injector<FetchAllTaskUseCase>();
 
   ViewState<List<TaskModel>> viewState =
       ViewState(state: ResponseState.LOADING);
@@ -31,7 +34,7 @@ class DashBoardViewModel extends BaseViewModel {
             taskCreatedTime: '',
             taskStatus: null));
     if (response is DataSuccess) {
-      if (response.data!.isEmpty) {
+      if (response.data != null) {
         _setViewState(ViewState.empty());
       } else {
         _setViewState(ViewState.complete(response.data ?? List.empty()));
@@ -48,4 +51,27 @@ class DashBoardViewModel extends BaseViewModel {
   hDeleteExistingTask(String id) {}
 
   hUpdateExistingTask() {}
+
+  Future<void> hFetchAllTaskFromLocalDb() async {
+    _setViewState(ViewState.loading());
+    final response = await _fetchAllTaskUseCase.call(
+        params: TaskModel(
+            taskSerialNo: null,
+            taskName: 'New Task',
+            taskCreatedTime: '',
+            taskStatus: null));
+    if (response is DataSuccess) {
+      if (response.data != null) {
+        _setViewState(ViewState.empty());
+      } else {
+        _setViewState(ViewState.complete(response.data ?? List.empty()));
+      }
+    }
+    if (response is DataFailed) {
+      if (kDebugMode) {
+        printLog(response.error.toString());
+      }
+      _setViewState(ViewState.error(response.error?.message ?? "".toString()));
+    }
+  }
 }

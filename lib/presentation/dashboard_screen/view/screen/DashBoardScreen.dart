@@ -22,7 +22,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<DashBoardViewModel>.reactive(
         viewModelBuilder: () => dashboardViewModel,
-        onModelReady: (viewModel) async {},
+        onModelReady: (viewModel) async {
+          viewModel.hFetchAllTaskFromLocalDb();
+        },
         builder: (context, viewModel, child) {
           return SafeArea(
               child: Scaffold(

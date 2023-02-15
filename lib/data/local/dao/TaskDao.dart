@@ -4,6 +4,7 @@ import '../../../domain/model/Task.dart';
 
 @dao
 abstract class TaskDao {
+
   @Query('SELECT * FROM Task WHERE status=:status')
   Future<List<TaskModel>> hFindAllTaskWithStatus(String status);
 
