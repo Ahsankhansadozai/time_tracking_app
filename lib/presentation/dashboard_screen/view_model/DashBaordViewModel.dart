@@ -31,13 +31,13 @@ class DashBoardViewModel extends BaseViewModel {
         params: TaskModel(
             taskSerialNo: null,
             taskName: 'New Task',
-            taskCreatedTime: '',
-            taskStatus: null));
+            taskCreatedTime: hGetCurrentDateTime(),
+            taskStatus: 1));
     if (response is DataSuccess) {
       if (response.data != null) {
         _setViewState(ViewState.empty());
       } else {
-        _setViewState(ViewState.complete(response.data ?? List.empty()));
+        _setViewState(ViewState.complete(response.data!));
       }
     }
     if (response is DataFailed) {
@@ -64,7 +64,7 @@ class DashBoardViewModel extends BaseViewModel {
       if (response.data != null) {
         _setViewState(ViewState.empty());
       } else {
-        _setViewState(ViewState.complete(response.data ?? List.empty()));
+        _setViewState(ViewState.complete((response.data!)));
       }
     }
     if (response is DataFailed) {

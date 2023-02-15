@@ -32,3 +32,10 @@ Widget hEmptyText(String text, double height, double width) {
         ],
       ));
 }
+
+hTextStyle(double fontSize){
+  return TextStyle(
+      fontFamily: 'Montserrat',
+      color: AppColor.CardDark,
+      fontSize: fontSize);
+}

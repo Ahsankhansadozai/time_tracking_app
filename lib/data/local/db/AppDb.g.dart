@@ -103,7 +103,7 @@ class _$TaskDao extends TaskDao {
   _$TaskDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database, changeListener),
+  )   : _queryAdapter = QueryAdapter(database),
         _taskModelInsertionAdapter = InsertionAdapter(
             database,
             'TaskModel',
@@ -112,8 +112,7 @@ class _$TaskDao extends TaskDao {
                   'taskName': item.taskName,
                   'taskCreatedTime': item.taskCreatedTime,
                   'taskStatus': item.taskStatus
-                },
-            changeListener),
+                }),
         _taskModelUpdateAdapter = UpdateAdapter(
             database,
             'TaskModel',
@@ -123,8 +122,7 @@ class _$TaskDao extends TaskDao {
                   'taskName': item.taskName,
                   'taskCreatedTime': item.taskCreatedTime,
                   'taskStatus': item.taskStatus
-                },
-            changeListener);
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -138,7 +136,7 @@ class _$TaskDao extends TaskDao {
 
   @override
   Future<List<TaskModel>> hFindAllTaskWithStatus(String status) async {
-    return _queryAdapter.queryList('SELECT * FROM Task WHERE status=?1',
+    return _queryAdapter.queryList('SELECT * FROM TaskModel WHERE status=?1',
         mapper: (Map<String, Object?> row) => TaskModel(
             taskSerialNo: row['taskSerialNo'] as int?,
             taskName: row['taskName'] as String?,
@@ -148,33 +146,31 @@ class _$TaskDao extends TaskDao {
   }
 
   @override
-  Stream<List<TaskModel>> hFindAllTask() {
-    return _queryAdapter.queryListStream('SELECT * FROM Task',
+  Future<List<TaskModel>> hFindAllTask() async {
+    return _queryAdapter.queryList('SELECT * FROM TaskModel',
         mapper: (Map<String, Object?> row) => TaskModel(
             taskSerialNo: row['taskSerialNo'] as int?,
             taskName: row['taskName'] as String?,
             taskCreatedTime: row['taskCreatedTime'] as String?,
-            taskStatus: row['taskStatus'] as int?),
-        queryableName: 'Task',
-        isView: false);
+            taskStatus: row['taskStatus'] as int?));
   }
 
   @override
-  Stream<TaskModel?> hFindTaskById(String id) {
-    return _queryAdapter.queryStream('SELECT * FROM Task WHERE taskSerialNo=?1',
+  Future<List<TaskModel>> hFindTaskById(String id) async {
+    return _queryAdapter.queryList(
+        'SELECT * FROM TaskModel WHERE taskSerialNo=?1',
         mapper: (Map<String, Object?> row) => TaskModel(
             taskSerialNo: row['taskSerialNo'] as int?,
             taskName: row['taskName'] as String?,
             taskCreatedTime: row['taskCreatedTime'] as String?,
             taskStatus: row['taskStatus'] as int?),
-        arguments: [id],
-        queryableName: 'Task',
-        isView: false);
+        arguments: [id]);
   }
 
   @override
   Future<void> deleteTask(String id) async {
-    await _queryAdapter.queryNoReturn('DELETE FROM Task WHERE taskSerialNo=?1',
+    await _queryAdapter.queryNoReturn(
+        'DELETE FROM TaskModel WHERE taskSerialNo=?1',
         arguments: [id]);
   }
 

@@ -14,7 +14,10 @@ class FetchAllTaskUseCase
   @override
   Future<DataState<List<TaskModel>>> call({required TaskModel params}) async {
     try {
-      final response = await _taskRepository.hFetchAllTaskFromLocalDb();
+      List<TaskModel> response =
+          await _taskRepository.hFetchAllTaskFromLocalDb();
+      printLog(response[0].taskName ?? "");
+
       return DataSuccess(response);
     } catch (e) {
       printLog(e.toString());

@@ -20,12 +20,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  hFetchAllTaskFromLocalDb() {
-    try {
-      _appDatabase.taskDao.hFindAllTask();
-      printLog("All Task fetched");
-    } catch (e) {
-      printLog('Fail:$e');
-    }
+  Future<List<TaskModel>> hFetchAllTaskFromLocalDb() async {
+    return _appDatabase.taskDao.hFindAllTask();
   }
 }

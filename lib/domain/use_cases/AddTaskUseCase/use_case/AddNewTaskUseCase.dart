@@ -17,7 +17,8 @@ class AddNewTaskUseCase
   Future<DataState<List<TaskModel>>> call(
       {required TaskModel params}) async {
     try {
-      final response = await _taskRepository.hAddNewTask(params);
+      await _taskRepository.hAddNewTask(params);
+      final response = await _taskRepository.hFetchAllTaskFromLocalDb();
       return DataSuccess(response);
     } catch (e) {
       if (kDebugMode) {

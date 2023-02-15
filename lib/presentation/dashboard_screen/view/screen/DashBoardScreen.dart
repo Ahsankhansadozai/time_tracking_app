@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:stacked/stacked.dart';
 import 'package:time_tracking_app/app/theme/app_color.dart';
+import 'package:time_tracking_app/common/custom_function.dart';
+import 'package:time_tracking_app/domain/model/Task.dart';
+import 'package:time_tracking_app/presentation/dashboard_screen/view/components/ListItemView/view/ListItemView.dart';
 import 'package:time_tracking_app/presentation/dashboard_screen/view_model/DashBaordViewModel.dart';
 
 import '../../../../common/widget_styling/WidgetStyling.dart';
@@ -40,6 +42,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTodoWidget(),
             addHorizontalSpace(10),
@@ -54,58 +57,65 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   _buildTodoWidget() {
     return SizedBox(
-      height: 200,
+      height: MediaQuery.of(context).size.height / 1,
       width: MediaQuery.of(context).size.width / 1.3,
       child: Container(
           decoration: hContainerBorder(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Card(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _buildTitle('Todo'),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.share,
-                              size: 20,
-                              color: AppColor.Gray700,
-                            )),
-                        IconButton(
-                            onPressed: () {
-                              dashboardViewModel.hAddNewTask();
-                            },
-                            icon: Icon(
-                              Icons.add,
-                              color: AppColor.Orange,
-                            ))
-                      ],
-                    )
-                  ],
+          child: Flexible(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Card(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildTitle('Todo'),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                Icons.share,
+                                size: 20,
+                                color: AppColor.Gray700,
+                              )),
+                          IconButton(
+                              onPressed: () {
+                                dashboardViewModel.hAddNewTask();
+                              },
+                              icon: Icon(
+                                Icons.add,
+                                color: AppColor.Orange,
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              addVerticalSpace(10),
-              false
-                  ? buildTodoList()
-                  : Center(
-                      child: hEmptyText(
-                        'Click to add task',
-                        100,
-                        MediaQuery.of(context).size.width / 1.3,
-                      ),
-                    )
-            ],
+
+                // Center(
+                //   child: hEmptyText(
+                //     'Click to add task',
+                //     100,
+                //     MediaQuery.of(context).size.width / 1.3,
+                //   ),
+                // ),
+                Flexible(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 8.0),
+                    child: buildTodoList(
+                        dashboardViewModel.viewState.data ?? List.empty()),
+                  ),
+                )
+              ],
+            ),
           )),
     );
   }
 
   _buildInProgressWidget() {
     return SizedBox(
-      height: 200,
       width: MediaQuery.of(context).size.width / 1.3,
       child: Container(
           decoration: hContainerBorder(10.0),
@@ -141,7 +151,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               ),
               addVerticalSpace(10),
               false
-                  ? buildTodoList()
+                  ? buildTodoList(
+                      dashboardViewModel.viewState.data ?? List.empty())
                   : Center(
                       child: hEmptyText(
                         'Click to add task',
@@ -156,7 +167,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   _buildDoneWidget() {
     return SizedBox(
-      height: 200,
       width: MediaQuery.of(context).size.width / 1.3,
       child: Container(
         decoration: hContainerBorder(10.0),
@@ -192,7 +202,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
             ),
             addVerticalSpace(10),
             false
-                ? buildTodoList()
+                ? buildTodoList(
+                    dashboardViewModel.viewState.data ?? List.empty())
                 : Center(
                     child: hEmptyText(
                       'Click to add task',
@@ -213,22 +224,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  buildTodoList() {
+  buildTodoList(List<TaskModel> data) {
+    printLog(data.length.toString());
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
-      itemCount: 0,
+      itemCount: 10,
       itemBuilder: (context, index) {
-        return AnimationConfiguration.staggeredList(
-          position: index,
-          duration: const Duration(milliseconds: 10),
-          child: SlideAnimation(
-            verticalOffset: 44.0,
-            child: FadeInAnimation(
-              child: Container(),
-            ),
-          ),
-        );
+        return ListItemView();
       },
     );
   }
