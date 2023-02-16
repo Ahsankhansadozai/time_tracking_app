@@ -195,6 +195,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     printLog(data.length.toString());
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
+      controller: dashboardViewModel.scrollControllerTodo,
       scrollDirection: Axis.vertical,
       itemCount: data.length,
       itemBuilder: (context, index) {
@@ -206,6 +207,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   buildInProgressList(List<TaskModel> data) {
     printLog(data.length.toString());
     return ListView.builder(
+      controller: dashboardViewModel.scrollControllerInProgress,
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemCount: data.length,
@@ -218,6 +220,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   buildDoneList(List<TaskModel> data) {
     printLog(data.length.toString());
     return ListView.builder(
+      controller: dashboardViewModel.scrollControllerDone,
       physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.vertical,
       itemCount: data.length,
@@ -288,7 +291,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     }
   }
 
-
   buildInDoneWidget() {
     switch (dashboardViewModel.viewState.state) {
       case ResponseState.LOADING:
@@ -297,8 +299,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         return Expanded(
           child: Container(
             margin: const EdgeInsets.symmetric(vertical: 2.0),
-            child: buildInProgressList(
-                dashboardViewModel.hFindTaskFromList(DONE)),
+            child:
+                buildInProgressList(dashboardViewModel.hFindTaskFromList(DONE)),
           ),
         );
       case ResponseState.ERROR:

@@ -6,6 +6,7 @@ import 'package:time_tracking_app/domain/use_cases/FetchAllTaskUseCase/FetchAllT
 
 import '../../data/local/db/AppDb.dart';
 import '../../domain/repository/TaskRepository.dart';
+import '../../domain/use_cases/UpdateTaskUseCase/use_case/UpdateExistingUseCase.dart';
 
 final injector = GetIt.instance;
 
@@ -22,4 +23,5 @@ Future<void> initializeDependencies() async {
       .registerSingleton<FetchAllTaskUseCase>(FetchAllTaskUseCase(injector()));
 
   injector.registerSingleton<DeleteTaskUseCase>(DeleteTaskUseCase(injector()));
+  injector.registerSingleton<UpdateTaskUseCase>(UpdateTaskUseCase(injector()));
 }

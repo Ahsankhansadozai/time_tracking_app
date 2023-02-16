@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stacked/stacked.dart';
 import 'package:time_tracking_app/domain/use_cases/AddTaskUseCase/use_case/AddNewTaskUseCase.dart';
 import 'package:time_tracking_app/domain/use_cases/DeleteTaskUseCase/use_case/DeleteTaskUseCase.dart';
+import 'package:time_tracking_app/domain/use_cases/UpdateTaskUseCase/use_case/UpdateExistingUseCase.dart';
 
 import '../../../app/di/injector.dart';
 import '../../../common/custom_function.dart';
@@ -17,6 +19,17 @@ class DashBoardViewModel extends BaseViewModel {
   final FetchAllTaskUseCase _fetchAllTaskUseCase =
       injector<FetchAllTaskUseCase>();
   final DeleteTaskUseCase _deleteTaskUseCase = injector<DeleteTaskUseCase>();
+  final UpdateTaskUseCase _updateTaskUseCase = injector<UpdateTaskUseCase>();
+
+  final ScrollController _scrollControllerTodo = ScrollController();
+  final ScrollController _scrollControllerInProgress = ScrollController();
+  final ScrollController _scrollControllerDone = ScrollController();
+
+  get scrollControllerTodo => _scrollControllerTodo;
+
+  get scrollControllerInProgress => _scrollControllerInProgress;
+
+  get scrollControllerDone => _scrollControllerDone;
 
   ViewState<List<TaskModel>> viewState =
       ViewState(state: ResponseState.LOADING);
@@ -29,21 +42,35 @@ class DashBoardViewModel extends BaseViewModel {
 
   // function to add New Task in Database
   Future<void> hAddNewTask(int status) async {
-    _setViewState(ViewState.loading());
     await _addNewTaskUseCase.call(
         params: TaskModel(
             taskName: 'New Task',
             taskCreatedTime: hGetCurrentDateTime(),
             taskStatus: status));
     hFetchAllTaskFromLocalDb();
+    hScrollEndOfList(status);
   }
 
   hDeleteExistingTask(String id) {}
 
-  hUpdateExistingTask() {}
+  Future<void> hUpdateExistingTask(TaskModel taskModel) async {
+    final response = await _updateTaskUseCase.call(params: taskModel);
+    if (response is DataSuccess) {
+      if (response.data == null) {
+        _setViewState(ViewState.empty());
+      } else {
+        _setViewState(ViewState.complete((response.data!)));
+      }
+    }
+    if (response is DataFailed) {
+      if (kDebugMode) {
+        printLog(response.error.toString());
+      }
+      _setViewState(ViewState.error(response.error?.message ?? "".toString()));
+    }
+  }
 
   Future<void> hFetchAllTaskFromLocalDb() async {
-    _setViewState(ViewState.loading());
     final response = await _fetchAllTaskUseCase.call(
         params: TaskModel(
             taskSerialNo: null,
@@ -66,7 +93,6 @@ class DashBoardViewModel extends BaseViewModel {
   }
 
   Future<void> hDeleteTaskFromDataDb(int taskSerialNo) async {
-    _setViewState(ViewState.loading());
     await _deleteTaskUseCase.call(params: taskSerialNo);
     hFetchAllTaskFromLocalDb();
   }
@@ -79,5 +105,36 @@ class DashBoardViewModel extends BaseViewModel {
       }
     });
     return listTobeReturned;
+  }
+
+  //use to scroll down to the list when list new task added.
+  void hScrollEndOfList(int status) {
+    switch (status) {
+      case 1:
+        _scrollControllerTodo.animateTo(
+          _scrollControllerTodo.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
+        notifyListeners();
+        break;
+      case 2:
+        _scrollControllerInProgress.animateTo(
+          _scrollControllerTodo.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
+        notifyListeners();
+        break;
+
+      case 3:
+        _scrollControllerDone.animateTo(
+          _scrollControllerTodo.position.maxScrollExtent,
+          curve: Curves.easeOut,
+          duration: const Duration(milliseconds: 300),
+        );
+        notifyListeners();
+        break;
+    }
   }
 }

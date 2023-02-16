@@ -28,4 +28,9 @@ class TaskRepositoryImpl implements TaskRepository {
   hDeleteTaskFromDb(int taskSerialNo) {
     return _appDatabase.taskDao.hDeleteTaskFromDb(taskSerialNo);
   }
+
+  @override
+  hUpdateTaskFromDb(TaskModel task) {
+    return _appDatabase.taskDao.updateTask(task);
+  }
 }
