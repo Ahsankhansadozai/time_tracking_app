@@ -74,6 +74,8 @@ dependencies:
   flutter_slidable: ^2.0.0
   animated_segmented_tab_control: ^1.0.1
   flutter_colorpicker: ^1.0.3
+  csv: ^5.0.1
+  path_provider: ^2.0.12
 
 dev_dependencies:
   flutter_test:

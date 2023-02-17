@@ -51,23 +51,9 @@ class DashBoardViewModel extends BaseViewModel {
     hScrollEndOfList(status);
   }
 
-  hDeleteExistingTask(String id) {}
-
   Future<void> hUpdateExistingTask(TaskModel taskModel) async {
-    final response = await _updateTaskUseCase.call(params: taskModel);
-    if (response is DataSuccess) {
-      if (response.data == null) {
-        _setViewState(ViewState.empty());
-      } else {
-        _setViewState(ViewState.complete((response.data!)));
-      }
-    }
-    if (response is DataFailed) {
-      if (kDebugMode) {
-        printLog(response.error.toString());
-      }
-      _setViewState(ViewState.error(response.error?.message ?? "".toString()));
-    }
+    await _updateTaskUseCase.call(params: taskModel);
+    hFetchAllTaskFromLocalDb();
   }
 
   Future<void> hFetchAllTaskFromLocalDb() async {
@@ -138,3 +124,26 @@ class DashBoardViewModel extends BaseViewModel {
     }
   }
 }
+
+//
+// generateCsv() async {
+//   List<List<String>> data = [
+//     ["No.", "Name", "Roll No."],
+//     ["1", randomAlpha(3), randomNumeric(3)],
+//     ["2", randomAlpha(3), randomNumeric(3)],
+//     ["3", randomAlpha(3), randomNumeric(3)]
+//   ];
+//   String csvData = ListToCsvConverter().convert(data);
+//   final String directory = (await getApplicationSupportDirectory()).path;
+//   final path = "$directory/csv-${DateTime.now()}.csv";
+//   print(path);
+//   final File file = File(path);
+//   await file.writeAsString(csvData);
+//   Navigator.of(context).push(
+//     MaterialPageRoute(
+//       builder: (_) {
+//         return LoadCsvDataScreen(path: path);
+//       },
+//     ),
+//   );
+// }

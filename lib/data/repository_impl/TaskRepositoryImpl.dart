@@ -9,10 +9,10 @@ class TaskRepositoryImpl implements TaskRepository {
   TaskRepositoryImpl(this._appDatabase);
 
   @override
-  hAddNewTask(TaskModel params) {
+  hAddNewTask(TaskModel params) async {
     printLog("Task Create Call");
     try {
-      _appDatabase.taskDao.insertNewTask(params);
+      await _appDatabase.taskDao.insertNewTask(params);
       printLog("Task Created");
     } catch (e) {
       printLog("$e");
@@ -21,16 +21,16 @@ class TaskRepositoryImpl implements TaskRepository {
 
   @override
   Future<List<TaskModel>> hFetchAllTaskFromLocalDb() async {
-    return _appDatabase.taskDao.hFindAllTask();
+    return await _appDatabase.taskDao.hFindAllTask();
   }
 
   @override
-  hDeleteTaskFromDb(int taskSerialNo) {
-    return _appDatabase.taskDao.hDeleteTaskFromDb(taskSerialNo);
+  hDeleteTaskFromDb(int taskSerialNo) async {
+    await _appDatabase.taskDao.hDeleteTaskFromDb(taskSerialNo);
   }
 
   @override
-  hUpdateTaskFromDb(TaskModel task) {
-    return _appDatabase.taskDao.updateTask(task);
+  hUpdateTaskFromDb(TaskModel task) async {
+    await _appDatabase.taskDao.updateTask(task);
   }
 }

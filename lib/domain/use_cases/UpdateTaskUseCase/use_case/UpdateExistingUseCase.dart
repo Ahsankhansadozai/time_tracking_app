@@ -14,8 +14,8 @@ class UpdateTaskUseCase
   @override
   Future<DataState<List<TaskModel>>> call({required TaskModel params}) async {
     try {
-      List<TaskModel> response =
-          await _taskRepository.hUpdateTaskFromDb(params);
+      dynamic response = await _taskRepository.hUpdateTaskFromDb(params);
+      printLog('Update Fixed');
       return DataSuccess(response);
     } catch (e) {
       printLog(e.toString());
