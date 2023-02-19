@@ -30,9 +30,9 @@ class AppTheme {
                 fontWeight: FontWeight.w800),
             systemOverlayStyle: SystemUiOverlayStyle.dark
                 .copyWith(statusBarColor: AppColor.White)),
-        scaffoldBackgroundColor: AppColor.Gray25,
+        scaffoldBackgroundColor: AppColor.CardLight,
         cardTheme: CardTheme(
-          color: AppColor.CardLight,
+          color: AppColor.Gray200,
         ),
         bottomSheetTheme:
             BottomSheetThemeData(backgroundColor: AppColor.BackgroundLight),
@@ -69,7 +69,7 @@ class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(
         primaryColor: AppColor.BlueDark,
-        primaryColorLight: AppColor.White,
+        primaryColorLight: AppColor.BlueDark,
         primaryColorDark: AppColor.BlueDark,
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(

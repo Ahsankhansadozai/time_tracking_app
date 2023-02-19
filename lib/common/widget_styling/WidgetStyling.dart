@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:time_tracking_app/app/theme/app_color.dart';
 
-hContainerBorder(double cornerRadius){
-return  BoxDecoration(
-    color: AppColor.Gray200, //new Color.fromRGBO(255, 0, 0, 0.0),
+hContainerBorder(double cornerRadius, BuildContext context) {
+  return BoxDecoration(
+      color: Theme.of(context).hintColor,
       borderRadius: BorderRadius.circular(cornerRadius));
 }
 
@@ -33,9 +33,6 @@ Widget hEmptyText(String text, double height, double width) {
       ));
 }
 
-hTextStyle(double fontSize){
-  return TextStyle(
-      fontFamily: 'Montserrat',
-      color: AppColor.CardDark,
-      fontSize: fontSize);
+hTextStyle(double fontSize) {
+  return TextStyle(fontFamily: 'Montserrat', fontSize: fontSize);
 }

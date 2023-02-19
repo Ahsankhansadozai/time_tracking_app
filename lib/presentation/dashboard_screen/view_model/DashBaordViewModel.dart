@@ -52,8 +52,9 @@ class DashBoardViewModel extends BaseViewModel {
   }
 
   Future<void> hUpdateExistingTask(TaskModel taskModel) async {
-    await _updateTaskUseCase.call(params: taskModel);
-    hFetchAllTaskFromLocalDb();
+    await _updateTaskUseCase
+        .call(params: taskModel)
+        .then((value) => {hFetchAllTaskFromLocalDb()});
   }
 
   Future<void> hFetchAllTaskFromLocalDb() async {

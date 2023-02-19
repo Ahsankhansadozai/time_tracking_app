@@ -7,6 +7,5 @@ abstract class TaskRepository {
 
   hDeleteTaskFromDb(int taskSerialNo);
 
-
   hUpdateTaskFromDb(TaskModel taskModel);
 }

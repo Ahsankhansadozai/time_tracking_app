@@ -14,13 +14,12 @@ abstract class TaskDao {
   @Query('SELECT * FROM TaskModel WHERE taskSerialNo=:id')
   Future<List<TaskModel>> hFindTaskById(String id);
 
-  @insert
-  @OnConflictStrategy.replace
+  @Insert(onConflict: OnConflictStrategy.replace)
   Future<void> insertNewTask(TaskModel task);
 
   @Query('DELETE FROM TaskModel WHERE taskSerialNo=:id')
   Future<void> hDeleteTaskFromDb(int id);
 
   @update
-  Future<void> updateTask(TaskModel cart);
+  Future<void> updateTask(TaskModel taskModel);
 }

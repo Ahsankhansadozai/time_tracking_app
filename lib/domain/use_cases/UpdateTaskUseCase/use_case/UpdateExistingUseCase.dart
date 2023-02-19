@@ -15,7 +15,9 @@ class UpdateTaskUseCase
   Future<DataState<List<TaskModel>>> call({required TaskModel params}) async {
     try {
       dynamic response = await _taskRepository.hUpdateTaskFromDb(params);
-      printLog('Update Fixed');
+      print(response.toString());
+      printLog(
+          'task to update :${params.taskStatus}${params.taskName}${params.taskCreatedTime}${params.taskSerialNo}');
       return DataSuccess(response);
     } catch (e) {
       printLog(e.toString());

@@ -8,3 +8,7 @@ const BOLD_TEXT = 'bold_text';
 const TODO = 1;
 const INPROGRESS = 2;
 const DONE = 3;
+
+const TODO_FROM = 'Todo From';
+const IN_PROGRESS_FROM = 'InProgress From';
+const DONE_FROM = 'Done From';

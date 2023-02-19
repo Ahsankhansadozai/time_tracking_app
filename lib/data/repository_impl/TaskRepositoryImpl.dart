@@ -30,7 +30,7 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  hUpdateTaskFromDb(TaskModel task) async {
-    await _appDatabase.taskDao.updateTask(task);
+  hUpdateTaskFromDb(TaskModel params) async {
+    await _appDatabase.taskDao.updateTask(params);
   }
 }
