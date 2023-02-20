@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `TaskModel` (`taskSerialNo` INTEGER PRIMARY KEY AUTOINCREMENT, `taskName` TEXT, `taskCreatedTime` TEXT, `taskStatus` INTEGER)');
+            'CREATE TABLE IF NOT EXISTS `TaskModel` (`taskSerialNo` INTEGER PRIMARY KEY AUTOINCREMENT, `taskName` TEXT, `taskCreatedTime` TEXT, `taskStatus` INTEGER, `timer` INTEGER, `lastTick` INTEGER, `lastUpdated` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -111,7 +111,10 @@ class _$TaskDao extends TaskDao {
                   'taskSerialNo': item.taskSerialNo,
                   'taskName': item.taskName,
                   'taskCreatedTime': item.taskCreatedTime,
-                  'taskStatus': item.taskStatus
+                  'taskStatus': item.taskStatus,
+                  'timer': item.timer == null ? null : (item.timer! ? 1 : 0),
+                  'lastTick': item.lastTick,
+                  'lastUpdated': item.lastUpdated
                 }),
         _taskModelUpdateAdapter = UpdateAdapter(
             database,
@@ -121,7 +124,10 @@ class _$TaskDao extends TaskDao {
                   'taskSerialNo': item.taskSerialNo,
                   'taskName': item.taskName,
                   'taskCreatedTime': item.taskCreatedTime,
-                  'taskStatus': item.taskStatus
+                  'taskStatus': item.taskStatus,
+                  'timer': item.timer == null ? null : (item.timer! ? 1 : 0),
+                  'lastTick': item.lastTick,
+                  'lastUpdated': item.lastUpdated
                 });
 
   final sqflite.DatabaseExecutor database;
@@ -141,7 +147,10 @@ class _$TaskDao extends TaskDao {
             taskSerialNo: row['taskSerialNo'] as int?,
             taskName: row['taskName'] as String?,
             taskCreatedTime: row['taskCreatedTime'] as String?,
-            taskStatus: row['taskStatus'] as int?),
+            taskStatus: row['taskStatus'] as int?,
+            timer: row['timer'] == null ? null : (row['timer'] as int) != 0,
+            lastTick: row['lastTick'] as int?,
+            lastUpdated: row['lastUpdated'] as String?),
         arguments: [status]);
   }
 
@@ -152,7 +161,10 @@ class _$TaskDao extends TaskDao {
             taskSerialNo: row['taskSerialNo'] as int?,
             taskName: row['taskName'] as String?,
             taskCreatedTime: row['taskCreatedTime'] as String?,
-            taskStatus: row['taskStatus'] as int?));
+            taskStatus: row['taskStatus'] as int?,
+            timer: row['timer'] == null ? null : (row['timer'] as int) != 0,
+            lastTick: row['lastTick'] as int?,
+            lastUpdated: row['lastUpdated'] as String?));
   }
 
   @override
@@ -163,7 +175,10 @@ class _$TaskDao extends TaskDao {
             taskSerialNo: row['taskSerialNo'] as int?,
             taskName: row['taskName'] as String?,
             taskCreatedTime: row['taskCreatedTime'] as String?,
-            taskStatus: row['taskStatus'] as int?),
+            taskStatus: row['taskStatus'] as int?,
+            timer: row['timer'] == null ? null : (row['timer'] as int) != 0,
+            lastTick: row['lastTick'] as int?,
+            lastUpdated: row['lastUpdated'] as String?),
         arguments: [id]);
   }
 

@@ -29,6 +29,13 @@ class _ListItemViewState extends State<ListItemView> {
         onModelReady: (viewModel) async {
           listItemViewModel
               .hSetTextInTextEditingController(widget.task.taskName ?? "");
+          if (widget.task.timer ?? false) {
+            print('last updated :${widget.task.lastUpdated}');
+
+            listItemViewModel.hSetStartTime(
+                widget.task.lastTick ?? 0, widget.task.lastUpdated.toString());
+            listItemViewModel.startTimerCount(widget.task, context);
+          }
         },
         builder: (context, viewModel, child) {
           return Padding(
@@ -107,20 +114,29 @@ class _ListItemViewState extends State<ListItemView> {
                       size: 18,
                       color: AppColor.Gray400,
                     ),
-                    addHorizontalSpace(10),
-                    Text(
-                      '${listItemViewModel.startTimer}',
-                      style: hTextStyle(
-                        12,
+                    addHorizontalSpace(20),
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        formatTime(listItemViewModel.startTimer),
+                        style: hTextStyle(
+                          12,
+                        ),
                       ),
                     ),
                     Transform.scale(
                       scale: 0.7,
                       child: CupertinoSwitch(
                           activeColor: AppColor.Orange,
-                          value: listItemViewModel.hStartTimer,
+                          value: widget.task.timer!,
                           onChanged: (value) {
-                            listItemViewModel.hEnableDisableTimer(value);
+                            widget.task.timer = value;
+                            widget.task.lastTick = listItemViewModel.startTimer;
+                            context
+                                .read<DashBoardViewModel>()
+                                .hUpdateExistingTask(widget.task);
+                            listItemViewModel.hEnableDisableTimer(
+                                value, widget.task, context);
                           }),
                     ),
                   ],
@@ -164,7 +180,10 @@ class _ListItemViewState extends State<ListItemView> {
                                   taskName: listItemViewModel
                                       .taskEditTextController.text,
                                   taskCreatedTime: widget.task.taskCreatedTime,
-                                  taskStatus: widget.task.taskStatus));
+                                  taskStatus: widget.task.taskStatus,
+                                  timer: false,
+                                  lastTick: listItemViewModel.startTimer,
+                                  lastUpdated: hGetCurrentDateTime()));
                         },
                         child: Text('Save', style: hTextStyle(14))),
                   ],
@@ -172,5 +191,9 @@ class _ListItemViewState extends State<ListItemView> {
               ],
             ),
           );
+  }
+
+  String formatTime(int seconds) {
+    return '${(Duration(seconds: seconds))}'.split('.')[0].padLeft(8, '0');
   }
 }

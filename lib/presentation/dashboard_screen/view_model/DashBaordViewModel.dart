@@ -6,12 +6,12 @@ import 'package:time_tracking_app/domain/use_cases/DeleteTaskUseCase/use_case/De
 import 'package:time_tracking_app/domain/use_cases/UpdateTaskUseCase/use_case/UpdateExistingUseCase.dart';
 
 import '../../../app/di/injector.dart';
+import '../../../common/constants.dart';
 import '../../../common/custom_function.dart';
 import '../../../core/data_state.dart';
 import '../../../core/view_state.dart';
 import '../../../domain/model/Task.dart';
 import '../../../domain/use_cases/FetchAllTaskUseCase/FetchAllTaskUseCase.dart';
-
 const loginBusyKey = 'dashboard';
 
 class DashBoardViewModel extends BaseViewModel {
@@ -44,30 +44,35 @@ class DashBoardViewModel extends BaseViewModel {
   Future<void> hAddNewTask(int status) async {
     await _addNewTaskUseCase.call(
         params: TaskModel(
-            taskName: 'New Task',
+            taskName: DEFUALT_NAME,
             taskCreatedTime: hGetCurrentDateTime(),
-            taskStatus: status));
+            taskStatus: status,
+            timer: false,
+            lastTick: 0));
     hFetchAllTaskFromLocalDb();
     hScrollEndOfList(status);
   }
 
   Future<void> hUpdateExistingTask(TaskModel taskModel) async {
+    printLog('updateCall');
     await _updateTaskUseCase
         .call(params: taskModel)
         .then((value) => {hFetchAllTaskFromLocalDb()});
   }
 
+  Future<void> hUpdateTaskTick(TaskModel taskModel) async {
+    printLog('updateCall');
+    await _updateTaskUseCase.call(params: taskModel);
+  }
+
   Future<void> hFetchAllTaskFromLocalDb() async {
-    final response = await _fetchAllTaskUseCase.call(
-        params: TaskModel(
-            taskSerialNo: null,
-            taskName: 'New Task',
-            taskCreatedTime: '',
-            taskStatus: null));
+    final response = await _fetchAllTaskUseCase.call(params: TaskModel());
     if (response is DataSuccess) {
       if (response.data == null) {
         _setViewState(ViewState.empty());
       } else {
+        print('last updated :${response.data![0].lastUpdated}');
+
         _setViewState(ViewState.complete((response.data!)));
       }
     }
@@ -126,25 +131,3 @@ class DashBoardViewModel extends BaseViewModel {
   }
 }
 
-//
-// generateCsv() async {
-//   List<List<String>> data = [
-//     ["No.", "Name", "Roll No."],
-//     ["1", randomAlpha(3), randomNumeric(3)],
-//     ["2", randomAlpha(3), randomNumeric(3)],
-//     ["3", randomAlpha(3), randomNumeric(3)]
-//   ];
-//   String csvData = ListToCsvConverter().convert(data);
-//   final String directory = (await getApplicationSupportDirectory()).path;
-//   final path = "$directory/csv-${DateTime.now()}.csv";
-//   print(path);
-//   final File file = File(path);
-//   await file.writeAsString(csvData);
-//   Navigator.of(context).push(
-//     MaterialPageRoute(
-//       builder: (_) {
-//         return LoadCsvDataScreen(path: path);
-//       },
-//     ),
-//   );
-// }

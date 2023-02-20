@@ -12,3 +12,4 @@ const DONE = 3;
 const TODO_FROM = 'Todo From';
 const IN_PROGRESS_FROM = 'InProgress From';
 const DONE_FROM = 'Done From';
+const DEFUALT_NAME = 'New Task';

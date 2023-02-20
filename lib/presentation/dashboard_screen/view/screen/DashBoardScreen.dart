@@ -68,23 +68,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildTitle('Todo'),
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.share,
-                                size: 20,
-                              )),
-                          IconButton(
-                              onPressed: () {
-                                dashboardViewModel.hAddNewTask(TODO);
-                              },
-                              icon: const Icon(
-                                Icons.add,
-                              ))
-                        ],
-                      )
+                      IconButton(
+                          onPressed: () {
+                            dashboardViewModel.hAddNewTask(TODO);
+                          },
+                          icon: const Icon(
+                            Icons.add,
+                          ))
                     ],
                   ),
                 ),
@@ -110,23 +100,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildTitle('InProgress'),
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.share,
-                                size: 20,
-                              )),
-                          IconButton(
-                              onPressed: () {
-                                dashboardViewModel.hAddNewTask(INPROGRESS);
-                              },
-                              icon: const Icon(
-                                Icons.add,
-                              ))
-                        ],
-                      )
+                      IconButton(
+                          onPressed: () {
+                            dashboardViewModel.hAddNewTask(INPROGRESS);
+                          },
+                          icon: const Icon(
+                            Icons.add,
+                          ))
                     ],
                   ),
                 ),
@@ -152,23 +132,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildTitle('Done'),
-                    Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(
-                              Icons.share,
-                              size: 20,
-                            )),
-                        IconButton(
-                            onPressed: () {
-                              dashboardViewModel.hAddNewTask(DONE);
-                            },
-                            icon: const Icon(
-                              Icons.add,
-                            ))
-                      ],
-                    )
+                    IconButton(
+                        onPressed: () {
+                          dashboardViewModel.hAddNewTask(DONE);
+                        },
+                        icon: const Icon(
+                          Icons.add,
+                        ))
                   ],
                 ),
               ),
