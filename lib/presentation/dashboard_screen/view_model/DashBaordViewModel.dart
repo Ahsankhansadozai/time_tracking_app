@@ -24,7 +24,7 @@ const loginBusyKey = 'dashboard';
 class DashBoardViewModel extends BaseViewModel {
   final AddNewTaskUseCase _addNewTaskUseCase = injector<AddNewTaskUseCase>();
   final FetchAllTaskUseCase _fetchAllTaskUseCase =
-      injector<FetchAllTaskUseCase>();
+  injector<FetchAllTaskUseCase>();
   final DeleteTaskUseCase _deleteTaskUseCase = injector<DeleteTaskUseCase>();
   final UpdateTaskUseCase _updateTaskUseCase = injector<UpdateTaskUseCase>();
 
@@ -39,7 +39,7 @@ class DashBoardViewModel extends BaseViewModel {
   get scrollControllerDone => _scrollControllerDone;
 
   ViewState<List<TaskModel>> viewState =
-      ViewState(state: ResponseState.LOADING);
+  ViewState(state: ResponseState.LOADING);
 
   void _setViewState(ViewState<List<TaskModel>> viewState) {
     this.viewState = viewState;

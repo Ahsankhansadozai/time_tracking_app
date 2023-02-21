@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:time_tracking_app/common/custom_function.dart';
 import 'package:time_tracking_app/data/local/db/AppDb.dart';
 import 'package:time_tracking_app/domain/model/Task.dart';
@@ -30,7 +32,8 @@ class TaskRepositoryImpl implements TaskRepository {
   }
 
   @override
-  hUpdateTaskFromDb(TaskModel params) async {
+  Future<void> hUpdateTaskFromDb(TaskModel params) async {
+    // await compute(_updateTask, params);
     await _appDatabase.taskDao.updateTask(params);
   }
 }

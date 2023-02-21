@@ -140,6 +140,59 @@ class _ListItemViewState extends State<ListItemView> {
                                 value, widget.task, context);
                           }),
                     ),
+                    widget.task.taskStatus == 1
+                        ? TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(AppColor.Orange)),
+                            onPressed: () {
+                              context
+                                  .read<DashBoardViewModel>()
+                                  .hUpdateExistingTask(TaskModel(
+                                      taskSerialNo: widget.task.taskSerialNo,
+                                      taskName: listItemViewModel
+                                          .taskEditTextController.text,
+                                      taskCreatedTime:
+                                          widget.task.taskCreatedTime,
+                                      taskStatus: 2,
+                                      timer: widget.task.timer,
+                                      lastTick: listItemViewModel.startTimer,
+                                      lastUpdated: hGetCurrentDateTime()));
+                            },
+                            child: Text(
+                              'To InProgress',
+                              style: TextStyle(
+                                  fontFamily: 'Montserrat',
+                                  fontSize: 10,
+                                  color: AppColor.White),
+                            ))
+                        : widget.task.taskStatus == 2
+                            ? TextButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        AppColor.Orange)),
+                                onPressed: () {
+                                  context
+                                      .read<DashBoardViewModel>()
+                                      .hUpdateExistingTask(TaskModel(
+                                          taskSerialNo:
+                                              widget.task.taskSerialNo,
+                                          taskName: listItemViewModel
+                                              .taskEditTextController.text,
+                                          taskCreatedTime:
+                                              widget.task.taskCreatedTime,
+                                          taskStatus: 3,
+                                          timer: widget.task.timer,
+                                          lastTick:
+                                              listItemViewModel.startTimer,
+                                          lastUpdated: hGetCurrentDateTime()));
+                                },
+                                child: Text('To Done',
+                                    style: TextStyle(
+                                        fontFamily: 'Montserrat',
+                                        fontSize: 10,
+                                        color: AppColor.White)))
+                            : Container()
                   ],
                 )
               ],

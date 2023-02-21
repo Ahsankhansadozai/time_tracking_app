@@ -16,7 +16,6 @@ import 'language/language_manager.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await initializeDependencies();
   FlutterNativeSplash.remove();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
