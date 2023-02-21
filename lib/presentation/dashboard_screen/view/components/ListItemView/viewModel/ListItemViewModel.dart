@@ -18,9 +18,12 @@ class ListItemViewModel extends BaseViewModel {
   get startTimer => _startTimer;
 
   hSetStartTime(int lastTick, String lastUpdatedTime) {
-    hCalculateDiffCurrTimeAndLastUpdatedTime(lastUpdatedTime);
+    int hTimeDistance =
+        hCalculateDiffCurrTimeAndLastUpdatedTime(lastUpdatedTime);
 
-    _startTimer = lastTick;
+    printLog('time distance = $hTimeDistance');
+
+    _startTimer = lastTick + hTimeDistance;
     notifyListeners();
   }
 
@@ -61,18 +64,20 @@ class ListItemViewModel extends BaseViewModel {
 
   void stopTimer({bool resets = true}) {
     _timer.cancel();
+    _startTimer = 0;
     notifyListeners();
   }
 
-  void hCalculateDiffCurrTimeAndLastUpdatedTime(String lastUpdatedTime) {
-    var hGetCurrentTimeStamp = DateFormat('yyyy-MM-dd HH:mm')
-        .parse(hGetCurrentDateTime())
-        .millisecondsSinceEpoch;
+  int hCalculateDiffCurrTimeAndLastUpdatedTime(String lastUpdatedTime) {
+    var hGetCurrentTimeStamp =
+        DateFormat('yyyy-MM-dd HH:mm').parse(hGetCurrentDateTime());
 
-    var lastUpdateTimeStamp = DateFormat('yyyy-MM-dd HH:mm')
-        .parse(lastUpdatedTime)
-        .millisecondsSinceEpoch;
+    var lastUpdateTimeStamp =
+        DateFormat('yyyy-MM-dd HH:mm').parse(lastUpdatedTime);
 
-    print('time stamps :$hGetCurrentTimeStamp  $lastUpdateTimeStamp}');
+    Duration difference = hGetCurrentTimeStamp.difference(lastUpdateTimeStamp);
+    int seconds = difference.inSeconds;
+    printLog('time stamp ppp : $seconds');
+    return seconds;
   }
 }

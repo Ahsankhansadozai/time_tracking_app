@@ -1,5 +1,11 @@
+import 'dart:io';
+
+import 'package:csv/csv.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_share/flutter_share.dart';
+import 'package:path/path.dart' as path;
+import 'package:path_provider/path_provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:time_tracking_app/domain/use_cases/AddTaskUseCase/use_case/AddNewTaskUseCase.dart';
 import 'package:time_tracking_app/domain/use_cases/DeleteTaskUseCase/use_case/DeleteTaskUseCase.dart';
@@ -12,6 +18,7 @@ import '../../../core/data_state.dart';
 import '../../../core/view_state.dart';
 import '../../../domain/model/Task.dart';
 import '../../../domain/use_cases/FetchAllTaskUseCase/FetchAllTaskUseCase.dart';
+
 const loginBusyKey = 'dashboard';
 
 class DashBoardViewModel extends BaseViewModel {
@@ -71,8 +78,6 @@ class DashBoardViewModel extends BaseViewModel {
       if (response.data == null) {
         _setViewState(ViewState.empty());
       } else {
-        print('last updated :${response.data![0].lastUpdated}');
-
         _setViewState(ViewState.complete((response.data!)));
       }
     }
@@ -128,6 +133,35 @@ class DashBoardViewModel extends BaseViewModel {
         notifyListeners();
         break;
     }
+  }
+
+  hConvertListToCsvFile(List<TaskModel> list) async {
+    try {
+      List<List<dynamic>> csvData = [
+        ['id', 'Name', 'status', 'created_at'],
+        ['John', 25, 'john@example.com'],
+        ['Jane', 30, 'jane@example.com'],
+        ['Bob', 35, 'bob@example.com']
+      ];
+
+      String csv = const ListToCsvConverter().convert(csvData);
+
+      final Directory tempDir = await getTemporaryDirectory();
+      final String filePath = path.join(tempDir.path, 'example.csv');
+      final File file = await File(filePath).create();
+      await file.writeAsString(csv);
+
+      final String localPath = filePath;
+
+      await FlutterShare.shareFile(
+          title: 'example.csv', filePath: localPath, fileType: '.csv');
+    } catch (e) {
+      printLog('Error: $e');
+    }
+  }
+
+  List<TaskModel> hGetTodoList(int status) {
+    return List.empty();
   }
 }
 

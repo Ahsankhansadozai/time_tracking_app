@@ -131,6 +131,7 @@ class _ListItemViewState extends State<ListItemView> {
                           value: widget.task.timer!,
                           onChanged: (value) {
                             widget.task.timer = value;
+                            widget.task.lastUpdated = hGetCurrentDateTime();
                             widget.task.lastTick = listItemViewModel.startTimer;
                             context
                                 .read<DashBoardViewModel>()

@@ -68,13 +68,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildTitle('Todo'),
-                      IconButton(
-                          onPressed: () {
-                            dashboardViewModel.hAddNewTask(TODO);
-                          },
-                          icon: const Icon(
-                            Icons.add,
-                          ))
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                dashboardViewModel.hConvertListToCsvFile(
+                                    dashboardViewModel.hGetTodoList(TODO));
+                              },
+                              icon: const Icon(
+                                Icons.share,
+                              )),
+                          IconButton(
+                              onPressed: () {
+                                dashboardViewModel.hAddNewTask(TODO);
+                              },
+                              icon: const Icon(
+                                Icons.add,
+                              )),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -100,13 +112,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildTitle('InProgress'),
-                      IconButton(
-                          onPressed: () {
-                            dashboardViewModel.hAddNewTask(INPROGRESS);
-                          },
-                          icon: const Icon(
-                            Icons.add,
-                          ))
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                dashboardViewModel.hConvertListToCsvFile(
+                                    dashboardViewModel
+                                        .hGetTodoList(INPROGRESS));
+                              },
+                              icon: const Icon(
+                                Icons.share,
+                              )),
+                          IconButton(
+                              onPressed: () {
+                                dashboardViewModel.hAddNewTask(INPROGRESS);
+                              },
+                              icon: const Icon(
+                                Icons.add,
+                              )),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -132,13 +157,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildTitle('Done'),
-                    IconButton(
-                        onPressed: () {
-                          dashboardViewModel.hAddNewTask(DONE);
-                        },
-                        icon: const Icon(
-                          Icons.add,
-                        ))
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              dashboardViewModel.hConvertListToCsvFile(
+                                  dashboardViewModel.hGetTodoList(DONE));
+                            },
+                            icon: const Icon(
+                              Icons.share,
+                            )),
+                        IconButton(
+                            onPressed: () {
+                              dashboardViewModel.hAddNewTask(DONE);
+                            },
+                            icon: const Icon(
+                              Icons.add,
+                            )),
+                      ],
+                    )
                   ],
                 ),
               ),

@@ -78,6 +78,7 @@ dependencies:
   csv: ^5.0.1
   path_provider: ^2.0.12
   to_csv: ^1.1.1
+  flutter_share: ^2.0.0
 
 dev_dependencies:
   flutter_test:
